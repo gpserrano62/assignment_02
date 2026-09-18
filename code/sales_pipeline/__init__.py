@@ -68,9 +68,10 @@ HOW TO BUILD IT
 # imports — "from the display module that sits beside this file", not "from some
 # package called display installed on this machine".
 
-from .display import print_sales_table
+from .display import print_sales_table,  print_item_table, print_day_table
 from .extract import get_raw_sales_data
-from .transform import clean_sales_data, calculate_total_revenue, summarize_by_item
+from .transform import clean_sales_data, calculate_total_revenue, summarize_by_item, find_top_entry, summarize_by_day
+
 
 
 
@@ -88,6 +89,12 @@ from .transform import clean_sales_data, calculate_total_revenue, summarize_by_i
 # find.
 __all__ = [
     "get_raw_sales_data",
-        "clean_sales_data",
-        "calculate_total_revenue",
-        "print_sales_table"]
+    "clean_sales_data",
+    "calculate_total_revenue",
+    "summarize_by_item",
+    "find_top_entry",
+    "summarize_by_day",
+    "print_sales_table",
+    "print_item_table",
+    "print_day_table",
+]

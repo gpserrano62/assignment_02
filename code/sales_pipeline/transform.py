@@ -189,8 +189,17 @@ def summarize_by_item(cleaned_data: list[dict]) -> list[dict]:
       `key=lambda entry: (-entry["revenue"], entry["item"])`. The tuple reads as
       "sort by revenue, biggest first, and use the name to break ties."
     """
-    # TODO: your code here
-    pass
+    accumulator = {}
+
+    for row in cleaned_data:
+        item = row["item"]
+        if item not in accumulator:
+            accumulator[item] = {"item": item, "units_sold": 0, "revenue": 0.0}
+        accumulator[item]["units_sold"] += row["qty"]
+        accumulator[item]["revenue"] += row["total_revenue"]
+
+    summary = sorted(accumulator.values(), key=lambda entry: (-entry["revenue"], entry["item"]))
+    return summary
 
 
 def summarize_by_day(cleaned_data: list[dict]) -> list[dict]:
@@ -224,7 +233,17 @@ def summarize_by_day(cleaned_data: list[dict]) -> list[dict]:
       date" case, or the first row of each day has nothing to add itself to.
     """
     # TODO: your code here
-    pass
+    accumulator = {}
+
+    for row in cleaned_data:
+        date = row["date"]
+        if date not in accumulator:
+            accumulator[date] = {"date": date, "units_sold": 0, "revenue": 0.0}
+        accumulator[date]["units_sold"] += row["qty"]
+        accumulator[date]["revenue"] += row["total_revenue"]
+
+    summary = sorted(accumulator.values(), key=lambda entry: entry["date"])
+    return summary
 
 
 def find_top_entry(summary: list[dict], field: str = "revenue") -> dict:
@@ -257,5 +276,11 @@ def find_top_entry(summary: list[dict], field: str = "revenue") -> dict:
       by revenue. It is only sorted by *revenue*, so that answer is wrong the moment
       someone asks for `units_sold`.
     """
-    # TODO: your code here
-    pass
+    if not summary:
+        return {}
+
+    top = summary[0]
+    for entry in summary:
+        if entry[field] > top[field]:
+            top = entry
+    return top

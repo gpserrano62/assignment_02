@@ -21,7 +21,36 @@ Before running:  pip install -r requirements.txt
     python code/main_daily_report.py        # the fixed sample data
     python code/main_daily_report.py 42     # the generated data for seed 42
 """
+import sys
 
+from sales_pipeline import (
+    get_raw_sales_data,
+    clean_sales_data,
+    calculate_total_revenue,
+    summarize_by_day,
+    find_top_entry,
+    print_day_table,
+)
+
+seed = None
+if len(sys.argv) > 1 and sys.argv[1]:
+    seed = int(sys.argv[1])
+print("=== OPERATIONS: Sales by Day ===")
+print()
+
+raw_data = get_raw_sales_data(seed)
+
+clean_data = clean_sales_data(raw_data)
+day_summary = summarize_by_day(clean_data)
+total_revenue = calculate_total_revenue(clean_data)
+busiest_by_revenue = find_top_entry(day_summary, "revenue")
+busiest_by_units = find_top_entry(day_summary, "units_sold")
+
+print_day_table(day_summary)
+print()
+print(f"Total Revenue:          ${total_revenue:,.2f}")
+print(f"Busiest day by revenue: {busiest_by_revenue['date']} (${busiest_by_revenue['revenue']:,.2f})")
+print(f"Busiest day by units:   {busiest_by_units['date']} ({busiest_by_units['units_sold']} units)")
 # --- The report ------------------------------------------------------------------
 #
 # No scaffolding. You have written two of these now, and this one asks the same
