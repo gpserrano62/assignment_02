@@ -47,8 +47,16 @@ def clean_currency(value) -> float:
       from the `except`. That is the line that stops one `"N/A"` from killing a
       report of 400 good rows.
     """
-    # TODO: your code here
-    pass
+
+    if value is None:
+        return 0.0
+
+    str_val = str(value).replace("$", "").replace(",", "").strip()
+
+    try:
+        return float(str_val)
+    except ValueError:
+        return 0.0
 
 
 def clean_quantity(value) -> int:
@@ -73,8 +81,13 @@ def clean_quantity(value) -> int:
     - Do not try to translate `"one"` into `1`. A word in a number field is bad
       data, and bad data becomes `0`.
     """
-    # TODO: your code here
-    pass
+    if value is None:
+        return 0
+
+    try:
+        return int(str(value).strip())
+    except ValueError:
+        return 0
 
 
 def clean_sales_data(raw_data: list[dict]) -> list[dict]:
@@ -104,8 +117,18 @@ def clean_sales_data(raw_data: list[dict]) -> list[dict]:
       cleaned `price` and `qty` you just stored instead of cleaning the raw values
       a second time.
     """
-    # TODO: your code here
-    pass
+
+    new_data = []
+    for row in raw_data:
+        cleaned_row = {
+            "date": row["date"],
+            "item": row["item"],
+            "price": clean_currency(row["price"]),
+            "qty": clean_quantity(row["qty"]),
+        }
+        cleaned_row["total_revenue"] = cleaned_row["price"] * cleaned_row["qty"]
+        new_data.append(cleaned_row)
+    return new_data 
 
 
 def calculate_total_revenue(cleaned_data: list[dict]) -> float:
@@ -128,8 +151,11 @@ def calculate_total_revenue(cleaned_data: list[dict]) -> float:
     - Nothing needs cleaning here. These rows already went through
       `clean_sales_data`, so `row["total_revenue"]` is a number you can trust.
     """
-    # TODO: your code here
-    pass
+    total = 0
+
+    for row in cleaned_data:
+        total += row["total_revenue"]
+    return total
 
 
 def summarize_by_item(cleaned_data: list[dict]) -> list[dict]:
