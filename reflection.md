@@ -19,4 +19,3 @@ Examples:
 **Best Reflection** "I learned when to use while vs for loops. While loops are for sentiel-controlled values (waiting for a condition to occur), vs for loops are for iterating over collections of fixed values."
 
 `--- Write your reflection in the file code/reflection.txt ---`
-I learned a lot during this assignment, specifically with the use of packages. In this case it was the folder with the __init__.py file where we could load functions easily. The biggest struggle for me today was indentations. It took me a while to reconfigure the functions because I was getting many errors with my code being out of line. I think I need more help in seeing the connections in between each file and how they all work simultaneously. 
