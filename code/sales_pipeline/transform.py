@@ -232,7 +232,6 @@ def summarize_by_day(cleaned_data: list[dict]) -> list[dict]:
       twice under two spellings. Do still guard the "first time I have seen this
       date" case, or the first row of each day has nothing to add itself to.
     """
-    # TODO: your code here
     accumulator = {}
 
     for row in cleaned_data:
